@@ -1,0 +1,17 @@
+.gradle/
+build/
+.classpath
+.settings/
+.project
+bin/
+.openapi-generator/
+src/main/java/com/subex/partnermanagement/api/*
+src/main/java/com/subex/partnermanagement/model/*
+src/main/java/org/
+openapi-generator/
+common-services-client/
+out
+.idea
+partnerManagementLog/
+partnerManagementLog/partnerManagementLog.log
+.temp*

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="28.264" height="23.553" viewBox="0 0 28.264 23.553">
+  <g id="panel_data_icon" transform="translate(0 -46)">
+    <path id="Path_61199" data-name="Path 61199" d="M4.339,151,0,166.868v1.8H23.823L28.264,151ZM18.47,165.386H8.5v-.841a5.08,5.08,0,0,1,2.578-4.433,3.39,3.39,0,0,1-.916-2.323,3.322,3.322,0,1,1,6.644,0,3.39,3.39,0,0,1-.916,2.323,5.08,5.08,0,0,1,2.578,4.433Z" transform="translate(0 -99.112)" fill="#fff"/>
+    <path id="Path_61200" data-name="Path 61200" d="M24.394,50.206V48.243H9.6L7.358,46H0V61.47L3.129,50.206Z" transform="translate(0)" fill="#fff"/>
+    <path id="Path_61201" data-name="Path 61201" d="M189.164,332.232a3.387,3.387,0,0,0-3.275,2.54h6.551A3.387,3.387,0,0,0,189.164,332.232Z" transform="translate(-175.676 -270.18)" fill="#fff"/>
+    <ellipse id="Ellipse_95" data-name="Ellipse 95" cx="1.692" cy="1.692" rx="1.692" ry="1.692" transform="translate(11.773 60.345) rotate(-89.312)" fill="#fff"/>
+  </g>
+</svg>

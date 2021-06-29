@@ -1,0 +1,42 @@
+plugins {
+    id "org.openapi.generator" version "4.3.1"
+    id "com.dorongold.task-tree" version "1.5"
+}
+
+defaultTasks 'clean', 'build'
+
+repositories {
+    mavenCentral()
+}
+
+task api(type: org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
+    generatorName = "typescript-angular"
+    inputSpec = "$projectDir/../partnermanagement-api/partnermanagement.json"
+    outputDir = "$projectDir/partnermanagement-api"
+    templateDir = "$projectDir/openapi-angular-template"
+    configOptions = [
+        npmName: "partnermanagement-api",
+        ngVersion: '9.1.1'
+    ]
+    def outputFiles = fileTree( outputDir ) {
+      exclude "node_modules", "wwwroot/*.js",
+                    "node_modules", "typings", "dist"
+    }
+    inputs.files("$projectDir/../partnermanagement-api/partnermanagement.json", "$projectDir/templateDir");
+    outputs.dirs("$projectDir/partnermanagement-api/api", "$projectDir/partnermanagement-api/model")
+}
+
+openApiValidate {
+    inputSpec = "$projectDir/../partnermanagement-api/partnermanagement.json"
+}
+
+task build(type:Exec) {
+    dependsOn 'api'
+	//commandLine 'cmd', '/c', 'create-package.bat'
+	commandLine './create-package.sh'
+    inputs.files("$projectDir/../partnermanagement-api/partnermanagement.json", "$projectDir/templateDir");
+    outputs.dir("$projectDir/partnermanagement-api")
+}
+
+task clean() {
+}

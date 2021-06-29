@@ -1,0 +1,10 @@
+.gradle/
+.project
+.settings/
+.idea
+docker-compose/.env
+**/gradle/*
+partnermanagement-service/gradlew
+partnermanagement-service/gradlew.bat
+partnermanagement-service/partnerManagementLog/*
+partnermanagement-service/partnerManagementLog/partnerManagementLog.log

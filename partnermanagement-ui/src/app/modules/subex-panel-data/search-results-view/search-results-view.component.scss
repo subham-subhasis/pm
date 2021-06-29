@@ -1,0 +1,47 @@
+app-search-results-view {
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+
+    $color-4D4F5C: #4d4f5c;
+    $color-17476b: #17476b;
+    .no-drop {
+        cursor: no-drop !important;
+        opacity: 0.5;
+    }
+    .color-4D4F5C {
+        color: $color-4D4F5C;
+    }
+    .color-17476b {
+        color: $color-17476b;
+    }
+    .opacity-7 {
+        opacity: 0.7;
+    }
+    .mat-checkbox-checked:not(.mat-checkbox-disabled).mat-accent .mat-ripple-element,
+    .mat-checkbox:active:not(.mat-checkbox-disabled).mat-accent .mat-ripple-element {
+        background: $color-17476b !important;
+    }
+    .mat-checkbox-checked.mat-accent .mat-checkbox-background,
+    .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background {
+        background-color: $color-17476b !important;
+    }
+
+    .mat-dialog-content {
+        max-height: calc(100vh - 75px);
+    }
+
+    .no-image-found {
+        background: #FFFFFF 0% 0% no-repeat padding-box;
+        border: 1px solid #707070;
+        border-radius: 9px;
+        height: 100%;
+    }
+
+    .empty-card-fixed {
+        height: 80px !important;
+        background: #FFFFFF 0% 0% no-repeat padding-box;
+        box-shadow: 0px 0px 4px #00000029;
+        border: 1px dashed #70707099;
+        border-radius: 12px;
+        opacity: 0.42;
+    }
+}

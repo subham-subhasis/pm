@@ -1,0 +1,25 @@
+<div class="main-sidenav">
+  <mat-sidenav id="sidebar" #sidenav mode="side" [ngStyle]="{ 'width.em': sidenavWidth }" opened="true" role="navigation">
+    <div class="disp-flex pointer" [ngClass]="{'flex-center-align': 6 > sidenavWidth, 'jc-flex-end': sidenavWidth > 6 }">
+      <span class="expansion-icon" *ngIf="6 > sidenavWidth">
+        <mat-icon (click)="toggle()" class="FS20">{{maticon.MENU}}</mat-icon>
+      </span>
+      <span class="expansion-icon jc-flex-end" *ngIf="sidenavWidth > 6">
+        <mat-icon (click)="toggle()" class="FS25">{{maticon.KEYBOARDARROWLEFT}}</mat-icon>
+      </span>
+    </div>
+    <mat-nav-list>
+      <mat-list-item *ngFor="let item of sidenavToolbatItems | orderBy:{ property: 'orderNum', descending: false }; last as last"
+      routerLink="4" 
+      (click)="onDirectoryClick(item.routingPathName)" 
+      [ngClass]="{ 'nav-active': formData.selectedImage == item.routingPathName, 'p-right-2': sidenavWidth > 6 }">
+        <img width="16" height="16" [title]="item.menuName" alt="item.menuName"
+         [src]="item.imageUrl">
+        <div fxFlex="10"></div>
+        <div *ngIf="sidenavWidth > 6" class="sidenav-item">
+          <span class="mat-list-full-name">{{item.menuName}}</span>
+        </div>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+</div>

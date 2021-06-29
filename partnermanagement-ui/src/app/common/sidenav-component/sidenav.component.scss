@@ -1,0 +1,42 @@
+
+.mat-list-full-name {
+    font-size: 1.3rem !important;
+    font-weight: 500 !important;
+    margin: 0.5rem !important;
+    color: rgb(227, 233, 237);
+}
+
+.mat-list-full-name:hover {
+    color: white;
+}
+
+.nav-active {
+    border-left: 3px solid transparent;
+    border-left-color: #3c8dbc !important;
+    background-color: rgba(128, 128, 128, 0.18);
+}
+
+.expansion-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+    color: white !important;
+    //background-color: rgba(0, 0, 0, 0.38);
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+}
+
+//override mat-drawer
+.mat-drawer-side {
+    border-right: none !important;
+}
+
+.mat-drawer {
+    position: relative !important;
+}
+
+.p-right-2 {
+    padding-right: 2rem !important;
+}

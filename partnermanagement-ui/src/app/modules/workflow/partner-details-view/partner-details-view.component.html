@@ -1,0 +1,123 @@
+
+<app-confirmdialog *ngIf="confirmDialoge.status" [message]="confirmDialoge.message" [objToFetch]="confirmDialoge.objToFetch" [buttonName]="'yes'" (fireModalEvent)="onApprove($event)"></app-confirmdialog>
+<app-common-modal *ngIf="moveBackDialouge.status" [header]="moveBackDialouge.header" [objToFetch]="moveBackDialouge.objToFetch" (fireMoveBackModalEvent)="onMoveBackOrPartnerCandidateClick($event)"></app-common-modal>
+<section class="workflow-dialog-conetent">
+    <div mat-dialog-content>
+        <div (click)="onNoClick()" class="close-btn-dialouge pointer">
+            <mat-icon class="FS19 close-mat-icon-psd">close</mat-icon></div>
+        <section class="content-partner-data flex-row md-flex-wrap PL-REM1 PR-REM1">
+            <div class="disp-flex jc-center align-self-center md-flex-center" *ngIf="pageloader"> <div id="cover-spin"></div></div>
+            
+            <div class="flex-1 flex-col md-flex-wrap" *ngIf="!pageloader">
+                <div class="flex-col partner-data-view-header WD-PC100 PB-REM2">
+                    <div class="partner-data-view-header-row1 WD-PC100">
+                        <mat-card class="partner-data-view-header-card flex-2">
+                            <mat-card-header>
+                                <div mat-card-avatar class="partner-data-view-header-header-image disp-flex">
+                                <div class="float-left" *ngIf="selectedProfile?.logo.length > 0">
+                                    <img class="responsive" height="40" width="60" [src]="selectedProfile?.logo" alt="Logo"/>
+                                </div>
+                                <div class="float-left name-image" *ngIf="selectedProfile?.logo.length == 0"
+                                [ngClass]="{'status-orange': selectedProfile.status == 'preactive', 'status-red': selectedProfile.status == 'rejected', 'status-green': selectedProfile.status == 'active', 'status-grey': selectedProfile.status == 'underconsideration'  }">
+                                    <div class="disp-flex jc-center align-self-center md-flex-center FS20 name-image">{{selectedProfile?.companyAbbr}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <mat-card-title class="FS15">{{selectedProfile?.companyName}}</mat-card-title>
+                                <mat-card-subtitle class="FS14">{{selectedProfile?.fullName}}</mat-card-subtitle>
+                            </mat-card-header>
+                        </mat-card>
+                        <div class="flex-2 align-self-center MT-15">
+                            <div class="disp-flex MB3">
+                                <div class="flex-1 color-grey FS12">{{'WORKFLOWDETAILSVIEW.PROFILETYPE' | translate}}</div>
+                                <div class="flex-1 color-grey FS12 ML10">{{'WORKFLOWDETAILSVIEW.CREATEDON' | translate}}</div>
+                            </div>
+                            <div class="disp-flex">
+                                <div class="filter-header-bold M flex-1 FS13">{{selectedProfile?.profileName}}</div>
+                                <div class="filter-header-bold M flex-1 FS13 ML10">{{selectedProfile?.createdDate | date}}</div>
+                            </div>
+                        </div>
+            
+                        <div class="flex-2 flex-center-align MT-15">
+                            <div class="flex-center-align status-card-div">
+                                <div class="FS14 filter-header-bold M">{{'WORKFLOWDETAILSVIEW.UNDERREVIEW' | translate}}</div>
+                            </div>
+                        </div>
+
+                        <div class="flex-2 align-self-center MT-15">
+                            <div class="flex-center-align scoring-card-div">
+                                <div class="FS14 filter-header-bold M">{{'WORKFLOWDETAILSVIEW.HEALTHSCORE' | translate}}
+                                    <!-- <span class="PL-REM2 FS17 B">7/10</span> -->
+                                    <span *ngIf="selectedProfile?.preOnBoardScore != null" class="FS17 B PL-REM2">{{selectedProfile?.preOnBoardScore}}</span>
+                                    <span *ngIf="selectedProfile?.preOnBoardScore != null" class="FS17 B">/10</span>
+                                    <span class="text-not-calc FS14 PL-REM1" *ngIf="selectedProfile?.preOnBoardScore == null">Not calculated</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="selectedProfile?.canEdit" class="partner-data-view-header-row2 WD-PC100 PL16 disp-flex jc-space-bw">
+                        <div class="">
+                            <button [disabled]="formData.editKPI" type="button" mat-raised-button class="partner-data-view-primary-btn"
+                            (click)="moveNextTeam()">
+                                <img class="MR5" alt="filter" height="15" src="./assets/images/correct.svg" title="Next team" width="15">
+                                {{'WORKFLOWDETAILSVIEW.APPROVE' | translate}}</button>
+                            <button *ngIf="selectedProfile?.canMoveback" [disabled]="formData.editKPI" type="button" mat-raised-button class="partner-data-view-primary-btn"
+                            (click)="moveBackToTeam()">
+                                <img class="MR5" alt="filter" height="18" src="./assets/images/moveback.svg" title="Move back" width="18">
+                                {{'WORKFLOWDETAILSVIEW.MOVEBACK' | translate}}</button>
+                            <button [disabled]="formData.editKPI" type="button" mat-raised-button class="partner-data-view-primary-btn"
+                            (click)="requestAdditionalInfo()">
+                                <img class="MR5" alt="filter" height="15" src="./assets/images/info.svg" title="Additional info" width="15">
+                                {{'WORKFLOWDETAILSVIEW.REQUESTMOREINFO' | translate}}</button>
+                        </div>
+                        <div>
+                            <span *ngIf="formData.editKPI" class="cancel-btn-ps pointer MR10"
+                            (click)="cancelEditPartnerData()">Cancel</span>
+                            <button *ngIf="formData.editKPI" type="button" mat-raised-button class="partner-data-view-primary-btn partner-data-save-btn"
+                            (click)="onSave()">
+                                <img class="MR5" alt="filter" height="15" src="./assets/images/correct.svg" title="Save" width="15">
+                                Save</button>
+                            <button *ngIf="!formData.editKPI" type="button" mat-raised-button class="partner-data-view-secondary-btn partner-data-edit-btn"
+                                (click)="editPartnerData()">
+                                <mat-icon class="FS18 B">edit</mat-icon>
+                                Edit</button>
+                        </div>
+                    </div>
+                   
+                </div>
+                <div class="partner-data-edit-body WD-PC100 flex-row md-flex-wrap">
+                    <div class="WD-PC100 flex-6" *ngIf="profileData && profileData.length">
+                        <ng-container *ngFor="let groupKey of formGrpMapKeys">
+                            <div class="P-REM1 FS15 S PL15 form-header-pm color-333"
+                                *ngIf="formGrpMap && formGrpMap[groupKey] && formGrpMap[groupKey].config && formGrpMap[groupKey].config.length">
+                                {{groupKey}}
+                            </div>
+                            <div class="wrap-dynamic-form">
+                                <div class="PT10 dynamic-form-box"
+                                    *ngIf="formGrpMap && formGrpMap[groupKey] && formGrpMap[groupKey].config && formGrpMap[groupKey].config.length">
+                                    <dynamic-form [fields]="formGrpMap[groupKey].config" [formGrp]="formGrpMap[groupKey].controls"
+                                        [fromComponent]="'partner-search'">
+                                    </dynamic-form>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                    <div class="flex-2 ML10">
+                        <mat-progress-bar mode="indeterminate" class="green-progress" color="red" *ngIf="loader"></mat-progress-bar>
+                        <div class="wf-header-check-list P-REM1 FS15 B">{{'WORKFLOWDETAILSVIEW.CHECKLIST' | translate}}</div>
+                        <div class="wf-checklist-wrapper P-REM1 ML10 MR10">
+                            <div class="disp-flex" *ngFor="let checklistData of formData.checklistData; let i=index">
+                                <mat-checkbox [(ngModel)]="checklistData.valueChecked" class="FS14 PT10 PB10 flex-row" [ngClass]="{'loaderOpacity': !selectedProfile?.canEdit, 'text-decoration-line-through': checklistData.valueChecked}"
+                                  (change)="checklistDataChanged(checklistData.displayName, checklistData.valueChecked)"
+                                  id="checklistData[{{i}}]" name="checklistData.displayName" [title]="checklistData.displayName">
+                                     {{ checklistData.displayName }}
+                                </mat-checkbox>                        
+                              </div>   
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </section>
+    </div>
+</section>

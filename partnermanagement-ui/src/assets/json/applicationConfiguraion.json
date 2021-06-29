@@ -1,0 +1,32 @@
+[
+    {
+        "applicationUrl": "http://127.0.0.1:8090/PartnerManagement",
+        "isOauthAuthentication": false,
+        "isLdapAuthentication": false,
+        "standaloneMode": false,
+        "idle":6000,
+        "timeout":3000,
+        "ping":12000,
+        "productIdentifier":"pm",   
+        "parentServersessionTimeUpdaterApi":"/ppservices/common/updatesessiongettoken",
+        "parentServerPingApi":"/ppservices/common/awakeServer",
+        "dev": {
+            "configureApiUrl": "http://127.0.0.1:8082/api",
+            "iframeUrl":"http://127.0.0.1:8090/PartnerManagement/view/",
+            "userInfosForWorkflow": "http://127.0.0.1:8086/api/userinfos/",
+            "approveOrRejectPM": "http://127.0.0.1:8091/approveormoveback",
+            "requestMoreInfo": "http://127.0.0.1:8091/requestForMoreInfo",
+            "passwordForapproveOrRejectPM": "admin003",
+            "panelDataForProfile": "http://127.0.0.1:8065/Profiles?name="
+        },
+        "prod": {
+            "configureApiUrl": "http://127.0.0.1:8082/api",
+            "iframeUrl":"http://127.0.0.1:8090/PartnerManagement/view/",
+            "userInfosForWorkflow": "http://127.0.0.1:8086/api/userinfos/",
+            "approveOrRejectPM": "http://127.0.0.1:8091/approveormoveback",
+            "requestMoreInfo": "http://127.0.0.1:8091/requestForMoreInfo",
+            "passwordForapproveOrRejectPM": "admin003",
+            "panelDataForProfile": "http://127.0.0.1:8065/Profiles?name="
+        }
+    }
+]

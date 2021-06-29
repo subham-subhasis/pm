@@ -1,0 +1,25 @@
+.audit-home-main-div {
+    width: calc(100vw - 240px) !important;
+}
+
+::ng-deep .audit-home-main-div {
+    //width: calc(100vw - 240px) !important;
+    position: absolute !important;
+}
+
+::ng-deep #ngp-data-table {
+    z-index: 0 !important;
+}
+
+.ngp-audit-trail-wrapper {
+    ::ng-deep .mat-form-field {
+        width: auto !important;
+    }
+   ::ng-deep ngp-persistent-search .mat-form-field-appearance-outline .mat-form-field-suffix {
+    top: 6px !important;
+   }
+
+   ::ng-deep ngp-persistent-search .mat-form-field-appearance-outline .mat-form-field-prefix {
+    top: 6px !important;
+   }
+}

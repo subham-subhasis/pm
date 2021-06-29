@@ -1,0 +1,281 @@
+<app-confirmdialog *ngIf="confirmDialoge.status" [message]="'PARTNERSEARCH.CONFIRMMESSAGE' | translate" [objToFetch]="confirmDialoge.objToFetch" [buttonName]="'yes'" (fireModalEvent)="onModalClick($event)"></app-confirmdialog>
+<section class="content" [ngClass]="{'opacityHalf': panelData.panelDataOpenSatate || blockchainData.blockchainPopUpOpenState }">
+    <div class="disp-flex">
+        <div class="disp-flex jc-center align-self-center md-flex-center" *ngIf="pageloader"> <div id="cover-spin"></div></div>
+        <div class="flex-3 left-search-area" *ngIf="!pageloader">
+            <div class="ps-left-card-header"> {{'PARTNERSEARCH.PARTNERVIEW' | translate}} </div>
+            <div class="left-search-sub-header disp-flex">
+                <mat-form-field class="WD-PC100">
+                    <mat-label>{{'PARTNERSEARCH.SEARCHCOMPANYNAME' | translate}} </mat-label>
+                    <span matPrefix>
+                        <mat-icon class="FS18 pointer MR10" style="vertical-align: middle !important;">search</mat-icon>
+                    </span>
+                    <input matInput type="text" placeholder="Ex : Microsoft, Google, Subex" [(ngModel)]='formData.searchText' autocomplete="off" (input)="formData.selectedCard = -1; formData.editKPI = true" (keyup.enter)="searchParticularCompany(formData.searchText)">
+                    <!-- <span matPrefix></span> -->
+                    
+                </mat-form-field>
+                <div class="pointer flex-center-align" (click)="changeFilter()">
+                    <button class="pointer ps-filter-btn"> <img width="15" height="15" title="filter" alt="filter" src="./assets/images/filter.svg"></button>
+                </div>
+            </div>
+            <div class="hint-text flex-row md-flex-wrap PL15 PB5" *ngIf="!formData.filterAction">
+                <div class="FS12 disp-flex MR5 MB10 pointer wrap-hint-btn"
+                    (click)="clearUpForntStatus()"
+                    [ngClass]="{'bacg-white': chipSelected.all}">
+                    <span class="MR5 img-circle-small status-blue"><span class="visibility-hidden">.s.</span></span><span class="PL2">{{'PARTNERSEARCH.ALL' | translate}} </span>
+                </div>
+                <div class="FS12 disp-flex MR5 MB10 pointer wrap-hint-btn" 
+                    (click)="onUpForntStatusChange('active')"
+                    [ngClass]="{'bacg-white': chipSelected.active}">
+                    <span class="MR5 img-circle-small status-green"><span class="visibility-hidden">.s.</span></span><span class="PL2">{{'PARTNERSEARCH.ACTIVE' | translate}} </span>
+                </div>
+                <div class="FS12 disp-flex MR5 MB10 pointer wrap-hint-btn"
+                    (click)="onUpForntStatusChange('preactive')"
+                    [ngClass]="{'bacg-white': chipSelected.preactive}">
+                    <span class="MR5 img-circle-small status-orange"><span class="visibility-hidden">.s.</span></span><span class="PL2">{{'PARTNERSEARCH.REGISTERED' | translate}} </span>
+                </div>
+                <div class="FS12 disp-flex MR5 MB10 pointer wrap-hint-btn" 
+                    (click)="onUpForntStatusChange('rejected')"
+                    [ngClass]="{'bacg-white': chipSelected.rejected}">
+                    <span class="MR5 img-circle-small status-red "><span class="visibility-hidden">.s.</span></span><span class="PL2">{{'PARTNERSEARCH.REJECTED' | translate}} </span>
+                </div>
+                <div class="FS12 disp-flex MR5 MB10 pointer wrap-hint-btn" 
+                    (click)="onUpForntStatusChange('underconsideration')"
+                    [ngClass]="{'bacg-white': chipSelected.underconsideration}">
+                    <span class="MR5 img-circle-small status-grey "><span class="visibility-hidden">.s.</span></span><span class="PL2">{{'PARTNERSEARCH.UNDER' | translate}}&nbsp;{{'PARTNERSEARCH.REVIEW' | translate}} </span>
+                </div>
+            </div>
+            <div class="WD-PC100 left-search-body flex-row" *ngIf="formData.allProfileData.length > 0" [@inOutAnimation] [ngClass]="{'back-opacity': formData.filterAction}"
+                infinite-scroll appScrollDirective 
+                [scrollWindow]="false"
+                [infiniteScrollDistance]="0.01"
+                [infiniteScrollDisabled]="false"
+                [infiniteScrollContainer]="'.left-search-body'" [fromRoot]="true" 
+                [infiniteScrollThrottle]="50"
+                (scrolled)="onScrollDown()"> 
+                <div class="left-card-warpper WD-PC100">
+                    <div class="left-card-single-wrap disp-flex MB10" *ngFor="let item of formData.allProfileData | searchFilter : 'companyName' : formData.searchText : 'includes' | orderBy:{ property: 'partnerId', descending: true };let col = index;">
+                        <mat-card class="left-searh-card WD-PC100 disp-flex jc-space-bw"
+                            [ngClass]="{'selected-mat-card': col == formData.selectedCard}"
+                            (click)="confirmToChangePartnerDetails(item.partnerId, col);" style="display: flex !important;">
+                        
+                        
+                            <div class="flex-1 disp-flex jc-center align-self-center md-flex-center">
+                                <div class="float-left P10" *ngIf="item?.logo.length > 0">
+                                    <img class="responsive" [src]="item?.logo" alt="Logo"/>
+                                </div>
+                                <div class="float-left name-image" *ngIf="item?.logo.length == 0"
+                                    [ngClass]="{'status-orange': item.status == 'preactive', 'status-red': item.status == 'rejected', 'status-green': item.status == 'active', 'status-grey': item.status == 'underconsideration'  }">
+                                    <div class="disp-flex jc-center align-self-center md-flex-center FS20 name-image">{{item?.companyAbbr}}
+                                    </div>
+                                </div>
+                        
+                            </div>
+                            <div class="flex-5">
+                        
+                                <mat-card-header class="WD-PC100 disp-flex jc-space-bw ML10 MB8">
+                                    <mat-card-title class="disp-flex jc-space-bw md-flex-center">
+                                        <div class="disp-flex">{{item?.companyName}}</div>
+                                        <div class="disp-flex">
+                                            <span class="disp-flex" *ngIf="item?.blockChainStatus == 'InProgress'">
+                                                <span class="FS11 bold-header-color MR5">Processing...</span>
+                                                <span class="MR20 MT-3" (click)="$event.stopPropagation()"><img alt="In progress" matTooltip="Blockchain Registration In progress" class="dot" src="./assets/images/blockchainRegistration.svg"></span>
+                                            </span>
+                                            <span *ngIf="blockchainData.isBLockchainIntegration && item?.blockChainStatus == 'Registered'" class="pointer ML20 MR20 MT-3" (click)="getBlockchainDataByProfileId(item.partnerId)"><img alt="In progress" matTooltip="Blockchain Registered." class="dot" src="./assets/images/blockchainSuccess.svg"></span>
+                                           <span class="float-right img-circle MR20" [ngClass]="{'status-orange': item.status == 'preactive', 'status-red': item.status == 'rejected', 'status-green': item.status == 'active', 'status-grey': item.status == 'underconsideration'  }"></span>    
+                                        </div>
+                                        </mat-card-title>
+                                    <mat-card-subtitle class="M FS13">{{item?.fullName}}</mat-card-subtitle>
+                                </mat-card-header>
+                                <mat-card-content>
+                                    <div class="left-searh-card-mat-table">
+                                        <div class="left-searh-card-mat-header-row disp-flex">
+                                            <div class="left-searh-card-mat-header-cell flex-3 color-grey FS11">{{'PARTNERSEARCH.TYPE' | translate}}</div>
+                                            <div class="left-searh-card-mat-header-cell flex-2 color-grey FS11">{{'PARTNERSEARCH.CREATEDON' | translate}}</div>
+                                            <div class="left-searh-card-mat-header-cell flex-2 color-grey FS11">{{'PARTNERSEARCH.PARTNERHEALTH' | translate}}</div>
+                                        </div>
+                                        <div class="left-searh-card-mat-row">
+                                            <div class="left-searh-card-mat-cell filter-header-bold M flex-3 FS13">{{item?.profileName}}</div>
+                                            <div class="left-searh-card-mat-cell filter-header-bold M flex-2 FS13">{{item?.createdDate | date}}</div>
+                                            <div class="left-searh-card-mat-cell filter-header-bold flex-2 FS13">
+                                                <span *ngIf="item?.preOnBoardScore != null" class="M">{{item?.preOnBoardScore}}</span>
+                                                <span *ngIf="item?.preOnBoardScore != null">/10</span>
+                                            <span class="text-not-calc" *ngIf="item?.preOnBoardScore == null FS10">Not calculated</span></div>
+                                        </div>
+                                    </div>
+                                </mat-card-content>
+                            </div>
+                        </mat-card>
+                        <div class="disp-flex md-flex-center jc-flex-end" [ngClass]="{'visibility-hidden': col != formData.selectedCard }">
+                            <img alt="right-arrow" height="15" width="15" class="blue-col roate-90" src="./assets/images/down-arrow.svg">
+                        </div>
+                    </div>
+            
+                </div>
+                
+            </div>
+            <!-- <div class="disp-flex jc-center align-self-center md-flex-center" *ngIf="loader && formData.allProfileData.length == 0"> <div id="cover-spin"></div></div> -->
+            <div class="WD-PC100 left-search-body flex-row WD-PC100" 
+                *ngIf="!loader && formData?.allProfileData.length == 0"
+                [@inOutAnimation]>
+                <div class="WD-PC100 M10 disp-flex jc-center no-data-wrapper">
+                    <img alt="login-user" class="mr-2" src="assets/images/noResult.png" style="height: 100px !important;">
+                </div>
+            </div>
+            <div class="disp-flex md-flex-center jc-flex-end up-arrow-warp" *ngIf="formData.filterAction"><span class="arrow-up"></span></div>
+            <div class="left-search-filter flex-col" *ngIf="formData.filterAction" [@inOutAnimation]>
+                <mat-label><span class="FS14 filter-header-bold">{{'PARTNERSEARCH.CREATEDDATE' | translate}}</span></mat-label>
+                <div class="flex-row md-flex-wrap">
+                    <mat-form-field class="mat-form-filed-date-filter MR30" >
+                        <input matInput [matDatepicker]="pickerFrom" placeholder="From" [(ngModel)]="filterData.from">
+                        <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+                        <mat-datepicker #pickerFrom startView="year" ></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field class="mat-form-filed-date-filter MR15">
+                        <input matInput [matDatepicker]="pickerTo" placeholder="To" [(ngModel)]="filterData.to"
+                        [min]="filterData.from">
+                        <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+                        <mat-datepicker #pickerTo startView="year"></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <mat-label><span class="FS14 filter-header-bold">{{'PARTNERSEARCH.PROFILETYPE' | translate}}</span></mat-label>
+                <div class="flex-col">
+                    <mat-form-field class="MT5" style="width: 90% !important" autocomplete="off">
+                        <mat-label>Search Profile</mat-label>
+                        <span matPrefix>
+                            <mat-icon class="FS18 va-middle MR5">search</mat-icon>
+                        </span>
+                        <input matInput type="text" placeholder="Ex : Voice, Content" #searchProfileval [(ngModel)]="formData.searchTextFilter" (input)="searchProfile(searchProfileval?.value)">
+                    </mat-form-field>
+                    <div class="filter-cb-type-business boredr-btm">
+                        
+                        <section class="example-section" *ngFor="let type of filterData.allProfiles;let ind = index;">
+                            <div class="flex-row" *ngIf="ind % 2 == 0">
+                                <mat-checkbox class="flex-1 MR15" [(ngModel)]="filterData.allProfiles[ind].selected" [checked]="filterData.allProfiles[ind].selected" name="{{filterData.allProfiles[ind].profileName}}" (change)="changeFilterCheckBoxVal(filterData.allProfiles[ind])" [title]="filterData.allProfiles[ind].profileName">{{filterData.allProfiles[ind].profileName}}</mat-checkbox>
+                                <mat-checkbox class="flex-1" *ngIf="filterData.allProfiles.length > ind+1" [(ngModel)]="filterData.allProfiles[ind+1].selected" [checked]="filterData.allProfiles[ind+1].selected" name="{{filterData.allProfiles[ind+1]?.profileName}}" [title]="filterData.allProfiles[ind+1].profileName" (change)="changeFilterCheckBoxVal(filterData.allProfiles[ind+1])">{{filterData.allProfiles[ind+1]?.profileName}}</mat-checkbox>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+                <mat-label class="MT10"><span class="FS14 filter-header-bold">{{'PARTNERSEARCH.STATUS' | translate}}</span></mat-label>
+                <div class="flex-col boredr-btm MT10 PB10">
+                    <div class="disp-flex">
+                        <div class="flex-1"><mat-checkbox class="example-margin" [(ngModel)]="filterData.statusSelected.active"  name="{{filterData.status.active}}">Active</mat-checkbox></div>
+                        <div class="flex-2"><mat-checkbox class="example-margin" [(ngModel)]="filterData.statusSelected.underconsideration" name="{{filterData.status.underconsideration}}">Under Review</mat-checkbox></div>
+                      </div>
+                      <div class="disp-flex">
+                        <div class="flex-1"><mat-checkbox class="example-margin" [(ngModel)]="filterData.statusSelected.preactive" name="{{filterData.status.preactive}}">Registered</mat-checkbox></div>
+                        <div class="flex-2"><mat-checkbox class="example-margin" [(ngModel)]="filterData.statusSelected.rejected" name="{{filterData.status.rejected}}">Rejected</mat-checkbox></div>
+                      </div>
+                 </div>
+                 <div class="flex-row MT20 MB5">
+                    <div class="disp-flex  jc-flex-end align-self-center flex-1">
+                        <span class="global-cancel-btn pointer" (click)="formData.filterAction = false">{{'CANCEL' | translate}}</span>
+                        <button class="global-transparent-button MR16" (click)="cancelFilter()">
+                            <mat-icon class="va-middle">refresh</mat-icon>
+                            {{'RESET' | translate}}</button>
+                        <button class="global-opaque-btn pointer" (click)="applyFilterDB(); formData.filterAction = false">
+                            <img class="MR5 va-middle" alt="Apply" height="15" src="./assets/images/correct.svg" title="Apply" width="15">
+                            {{'APPLY' | translate}}</button>
+                    </div>
+
+                 </div>
+            </div>
+            
+        </div>
+        
+        <div class="flex-4" *ngIf="!pageloader" [ngClass]="{'loaderOpacity':loader}">
+            <mat-progress-bar mode="indeterminate" class="green-progress" color="red" *ngIf="loader"></mat-progress-bar>
+            <section class="right-edit-area PT-REM1">
+                <div class="right-edit-header disp-flex md-flex-center">
+                    <mat-form-field class="WD-PC100 right-edit-area-mat-form ML20 MT5" *ngIf="formData.selectedCard > -1">
+                        <mat-label>{{'PARTNERSEARCH.STATUS' | translate}}</mat-label>
+                         <mat-select [disableOptionCentering]="true" id="partnerSataus" [(ngModel)]="selectedProfile.status" [disabled]="formData.editKPI">
+                                <mat-option *ngFor="let status of formData.allStatus" [value]="status.statusId">
+                                    {{status.statusName}}
+                                </mat-option>
+                            </mat-select>
+                    </mat-form-field>
+                    <mat-form-field *ngIf="selectedProfile.workStepTeam && selectedProfile.workStepTeam != null" class="WD-PC100 right-edit-area-mat-form ML20 MT5">
+                        <mat-label>{{'PARTNERSEARCH.WORKFLOWSTATUS' | translate}}</mat-label>
+                         <mat-select [disableOptionCentering]="true" [(value)]="selectedProfile.workStepTeam" [disabled]="true">
+                                <mat-option [value]="selectedProfile.workStepTeam" >
+                                    {{selectedProfile.workStepTeam}}
+                                </mat-option>
+                            </mat-select>
+                    </mat-form-field>
+                    <div class="WD-PC100 disp-flex jc-flex-end filter-icon clr-blue poiner ML3 pointer PR15">
+                        
+                        <div class="disp-flex" *ngIf="selectedProfile.workStepTeam == null">
+                            <div class="disp-flex align-self-center" *ngIf="!formData.editKPI && formData.selectedCard > -1">
+                                <!-- <span class="FS25 MT4 MR10 pointer" (click)="refreshPartnerData()">
+                                    <mat-icon>refresh</mat-icon>
+                                </span> -->
+                                <span class="global-cancel-btn pointer MR10" (click)="cancelEdit()">{{'CANCEL' | translate}}</span>
+                                <button class="global-transparent-button MR16" (click)="refreshPartnerData()">
+                                    <mat-icon class="va-middle">refresh</mat-icon>
+                                    {{'RESET' | translate}}</button>
+                                <button class="global-opaque-btn pointer MR16" (click)="onSave()">
+                                    <img class="MR5 va-middle" alt="save" height="15" src="./assets/images/correct.svg" title="Save" width="15">
+                                    {{'SAVE' | translate}}</button>
+                            </div>
+                            
+                            <div *ngIf="selectedProfile?.backupStatus != 'active' && formData.editKPI && formData.selectedCard > -1">
+                                <button class="global-transparent-button MR16" (click)="eidtKPI()" *ngIf="screenActions?.edit">
+                                    <img class="MR5 MT-4 va-middle pointer" alt="Edit" height="15" src="./assets/images/edit.svg" title="Edit" width="15">
+                                    {{'EDIT' | translate}}</button>
+                            </div>
+                        </div>
+                        <div *ngIf="false && formData.selectedCard > -1 && (selectedProfile?.backupStatus != 'preactive' || panelData.isPanelDataIntegration)">
+                            <button class="global-icon-btn disp-flex md-flex-center jc-center" mat-button [matMenuTriggerFor]="moreOptions"><mat-icon>more_vert</mat-icon></button>
+                            <mat-menu class="MT10" #moreOptions="matMenu">
+                                <div mat-menu-item class="disp-flex align-self-center" *ngIf="panelData.isPanelDataIntegration && selectedProfile?.backupStatus != 'preactive' && formData.selectedCard > -1">
+                                    <button class="global-btn-color-font" *ngIf ="panelData.matchFound" mat-menu-item (click)="onProspectPreviewMatchFound()"><mat-icon class="va-middle FS20 MT3 MR5">visibility</mat-icon>{{'PARTNERSEARCH.VIEWPROSPECTPROFILE' | translate}}</button>
+                                    <button class="global-btn-color-font" *ngIf ="!panelData.matchFound" mat-menu-item (click)="onProspectPreviewMatchNotFound()"><mat-icon class="va-middle FS20 MT3 MR5">visibility</mat-icon>{{'PARTNERSEARCH.VIEWPROSPECTPROFILE' | translate}}</button>
+                                </div>
+                                <div mat-menu-item class="disp-flex align-self-center" *ngIf="(selectedProfile.status == 'active' && selectedProfile.blockChainStatus == null || selectedProfile.blockChainStatus == 'Failed') && blockchainData.isBLockchainIntegration">
+                                    <button class="global-btn-color-font" mat-menu-item (click)="onBlockChainRegisterPopUp('NEW', {})"><img alt="blockchainRegister" class="va-middle FS15 MT3 MR8" src="./assets/images/blockchainSuccess.svg"> {{'PARTNERSEARCH.ORGREGISTER' | translate}}</button>
+                                </div>
+                            </mat-menu>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="panelData.isPanelDataIntegration && selectedProfile?.backupStatus == 'preactive' && formData.selectedCard > -1" class="disp-flex jc-space-bw P-REM1 panel-data-toast-message md-flex-center" [ngClass]="{'success-toast-bgcolor': panelData.matchFound, 'warn-toast-bgcolor': !panelData.matchFound}">
+                    <div class="flex-center-align md-flex-center">
+                        <div class="flex-center-align md-flex-center icon-info-panel-data" [ngClass]="{'success-icon-info-panel-data': panelData.matchFound, 'warn-icon-info-panel-data': !panelData.matchFound}"><span class="FS14 white B">i</span></div>
+                        <div class="ML20 FS14 B" *ngIf ="panelData.matchFound">{{'PARTNERSEARCH.PROSPECTPROFILEAUTOASSIGNED' | translate}}</div>
+                        <div class="ML20 FS14 B" *ngIf ="!panelData.matchFound">{{'PARTNERSEARCH.PROSPECTPROFILENOTFOUND' | translate}}</div>
+                    </div>
+                    <div class="disp-flex jc-flex-end panel-data-button PR-REM1">
+                        <span class="FS14 B pointer" *ngIf ="panelData.matchFound" (click)="linkMatchedProspectProfile(true)">{{'PARTNERSEARCH.VIEW' | translate}}</span>
+                        <span class="FS14 B pointer" *ngIf ="!panelData.matchFound" (click)="createNewProspectProfile(true)">{{'PARTNERSEARCH.CREATENOW' | translate}}</span>
+                    </div>
+                </div>
+                <div class="right-edit-body" *ngIf="formData.selectedCard > -1">
+                    <div class="WD-PC100 MT-10" *ngIf="selectedProfile.profileName && profileData && profileData.length">
+                        <ng-container *ngFor="let groupKey of formGrpMapKeys">
+                            <div class="P-REM1 FS15 S ML6 form-header-pm color-333"
+                                *ngIf="formGrpMap && formGrpMap[groupKey] && formGrpMap[groupKey].config && formGrpMap[groupKey].config.length">
+                                {{groupKey}}
+                            </div>
+                            <div class="wrap-dynamic-form">
+                                <div class="ML10 dynamic-form-box"
+                                    *ngIf="formGrpMap && formGrpMap[groupKey] && formGrpMap[groupKey].config && formGrpMap[groupKey].config.length">
+                                    <dynamic-form [fields]="formGrpMap[groupKey].config" [formGrp]="formGrpMap[groupKey].controls"
+                                        [fromComponent]="'partner-search'">
+                                    </dynamic-form>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="right-edit-body" *ngIf="formData.selectedCard == -1">
+                    <div class="WD-PC100 M10 disp-flex jc-center no-data-wrapper PB10">
+                        <img alt="login-user" class="mr-2" src="./assets/images/noRecordFoundRightPanelPartnerSearch.svg" style="height: 100px !important;">
+                    </div>
+                    <h1 class="right-info-no-data disp-flex jc-center ML30">{{'PARTNERSEARCH.PLEASESELECTAPARTNER' | translate}}</h1>
+                </div>
+            </section>
+        </div>
+    </div>
+</section>

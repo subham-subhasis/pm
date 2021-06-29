@@ -1,0 +1,9 @@
+{
+    "apiUrl": "http://localhost:8084",
+    "keycloakConfig": {
+        "url": "http://ngp-keycloak:8090/auth",
+        "realm": "ngp",
+        "clientId": "ngp-audit-trail-service"
+    },
+    "commonServicesApiUrl": "http://common-services-service:8081"
+}

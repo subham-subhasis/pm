@@ -1,0 +1,99 @@
+<app-confirmdialog *ngIf="confirmDialoge.status" [message]="confirmDialoge.message" [objToFetch]="confirmDialoge.objToFetch" [buttonName]="'yes'" (fireModalEvent)="onApprove($event)"></app-confirmdialog>
+<app-common-modal *ngIf="moveBackDialouge.status" [header]="moveBackDialouge.header" [objToFetch]="moveBackDialouge.objToFetch" (fireMoveBackModalEvent)="onRejectOrPartnerCandidateMove($event)"></app-common-modal>
+<section class="content">
+    <div class="disp-flex jc-center align-self-center md-flex-center" *ngIf="pageloader"> <div id="cover-spin"></div></div>
+    <div class="flex-col md-flex-wrap" *ngIf="!pageloader">
+        <div class="disp-flex workflow-view-header WD-PC100">
+            <div class="disp-flex jc-space-bw WD-PC100 PT-REM2 PB-REM2">
+                <div class="workflow-view-header-team-name FS20 B PL-REM5">
+                    {{formData.currentTeam}}
+                    <span *ngIf="formData.currentTeam">&nbsp;{{'WORKFLOW.TEAM' | translate}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="disp-flex workflow-view-body WD-PC100">
+            <div *ngIf="formData.currentTeamData.length > 0" class="md-flex-wrap workflow-view-body-content WD-PC100 PL-REM4 PR-REM4 PT-REM2">
+                <div class="workflow-view-search-sub-header disp-flex WD-PC100">
+                    <mat-form-field class="WD-PC100">
+                        <mat-label>{{'WORKFLOW.SEARCHCOMPANYNAME' | translate}}</mat-label>
+                        <span matPrefix>
+                            <mat-icon class="FS18 pointer MR10 B" style="vertical-align: middle !important;">search</mat-icon>
+                        </span>
+                        <input matInput type="text" placeholder="Ex : Microsoft, Google, Subex" [(ngModel)]='formData.searchTextForPartner' autocomplete="off">
+                        <!-- <span matPrefix></span> 
+                        <span matSuffix>
+                            <mat-icon class="FS20 B">search</mat-icon>
+                        </span>-->
+                    </mat-form-field>
+                </div>
+                <div class="disp-flex WD-PC100" cdkDropListGroup>
+                    <div [id]="team.position" *ngFor="let team of formData?.currentTeamData | orderBy:{ property: 'position', descending: false}; let i = index;" class="flex-1 work-flow-wrapper-card-container MR30">
+                        <div *ngIf="team.cardsForStatus" class="flex-col work-flow-card-container"
+                        cdkDropList
+                        [cdkDropListData]="team.cardsForStatus"
+                        (cdkDropListDropped)="drop($event, i, team.teamName)">
+                            <div class="work-flow-card-header FS15 B MT15 ML20">
+                                {{team.teamName}} 
+                                <span *ngIf="formData?.searchTextForPartner.length == 0">{{'('}}{{team?.cardsForStatus.length}}{{')'}}</span>
+                            </div>
+                            <div class="work-flow-wrapper-card-container-body">
+                                <div class="work-flow-card-body M10" *ngFor="let card of team?.cardsForStatus| orderBy:{ property: 'createdDate', descending: true} | searchFilter : 'companyName' : formData.searchTextForPartner : 'includes'; let a = index; let lastCount = count;" cdkDrag [cdkDragDisabled]="!team.canMove">
+                                    <mat-card class="work-flow-card" (dblclick)="routeToDdetailsPage(card, team.canMove, team.position)">
+                                        <mat-card-header class="workflow-inner-mat-card-header">
+                                        <div mat-card-avatar class="workflow-card-header-image disp-flex">
+                                            <div class="float-left" *ngIf="card?.logo.length > 0">
+                                                <img class="responsive" height="40" width="40" [src]="card?.logo" alt="Logo"/>
+                                            </div>
+                                            <div class="float-left workflow-company-abbr-name-image" *ngIf="card?.logo.length == 0"
+                                            [ngClass]="{'status-orange': card.status == 'preactive', 'status-red': card.status == 'rejected', 'status-green': card.status == 'active', 'status-grey': card.status == 'underconsideration'  }">
+                                                <div class="disp-flex jc-center align-self-center md-flex-center FS20 workflow-company-abbr-name-image">{{card?.companyAbbr}}
+                                                    </div>
+                                            </div>
+                                        </div>
+                                        <mat-card-title class="workflow-inner-mat-card-header-title wordbreak">{{card?.companyName}}</mat-card-title>
+                                        <mat-card-subtitle class="workflow-inner-mat-card-header-subtitle wordbreak">{{card?.fullName}}</mat-card-subtitle>
+                                        </mat-card-header>
+                                        <mat-card-content class="PT5">
+                                            <div class="disp-flex MB5">
+                                                <div class="flex-1 color-grey FS11">Type</div>
+                                                <div class="flex-1 color-grey FS11">Created On</div>
+                                            </div>
+                                            <div class="disp-flex">
+                                                <div class="filter-header-bold M flex-1 FS12">{{card?.profileName}}</div>
+                                                <div class="filter-header-bold M flex-1 FS12">{{card?.createdDate | date}}</div>
+                                            </div>
+                                        </mat-card-content>
+                                    </mat-card>
+                                </div>
+                                <div class="flex-col work-flow-card-container">
+                                    <div class="work-flow-card-body M10">
+                                        <mat-card class="work-flow-card-fixed">
+                                            <mat-card-content class="PT5">
+                                                <span class="FS13 ta-center">
+                                                    {{team.dragDropText}}
+                                                </span>
+                                            </mat-card-content>
+                                        </mat-card>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="formData.currentTeamData.length == 0" class="WD-PC100 M10 disp-flex jc-center no-data-wrapper">
+                    <!-- <img alt="login-user" class="mr-2" src="./assets/images/noResult.png" style="width: 200px; height: 150px !important;"> -->
+                    <div class="work-flow-card-body WD-PC80 MT50">
+                        <mat-card class="work-flow-card-fixed">
+                            <mat-card-content class="PT5">
+                                <span class="FS15 ta-center">
+                                    {{'WORKFLOW.NODATAFOUND' | translate}}
+                                </span>
+                            </mat-card-content>
+                          </mat-card>
+                    </div>
+                </div>
+        </div>
+    </div>
+</section>

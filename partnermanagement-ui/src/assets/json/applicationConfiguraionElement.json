@@ -1,0 +1,20 @@
+{
+    "dev": {
+        "onBoarding": { 
+            "configureApiUrl": "http://127.0.0.1:8083/api"
+        },
+        "panelData": {
+            "panelDataUrl": "http://127.0.0.1:8050",
+            "panelDataGetKpiUrl": "http://127.0.0.1:8060"
+        }
+    },
+    "prod": {
+        "onBoarding": { 
+            "configureApiUrl": "http://127.0.0.1:8083/api"
+        },
+        "panelData": {
+            "panelDataUrl": "http://127.0.0.1:8050",
+            "panelDataGetKpiUrl": "http://127.0.0.1:8060"
+        }
+    }
+}

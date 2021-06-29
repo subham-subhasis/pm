@@ -1,0 +1,267 @@
+.workflow-dialog-conetent{
+    .close-btn-dialouge {
+        z-index: 9999;
+        background: #313131;
+        color: white !important;
+        height: 20px;
+        width: 20px;
+        border-radius: 50%;
+        float: right;
+    }
+
+    .close-mat-icon-psd {
+        width: 22px !important;
+    }
+
+    .mat-dialog-content {
+        max-height: max-content !important;
+    }
+
+    .mat-dialog-container { 
+       padding: 5px !important;
+    }
+
+    .mat-form-field-infix {
+        padding: 0.5rem 0 1.3rem 0 !important;
+    }
+
+    .mat-form-field-wrapper {
+        margin-right: 2rem !important;
+    }
+
+    .mat-form-field {
+        font-size: 1.4rem !important;
+        line-height: 1.125!important;
+        width: 100%!important;
+    }
+
+    app-text-area {
+        width: 100% !important;
+    }
+    
+    dynamic-form {
+      width: 100% !important;
+    }
+
+    textarea {
+        height: 5em !important;
+        max-height: 5em !important;
+        overflow-y: auto;
+    }
+
+   .content-partner-data {
+        // border: 1px solid #707070;
+        // height: calc(100vh - 50px);
+        // max-height: calc(100vh - 50px);
+        //overflow-y: auto;
+        overflow-x: none;
+        background: #FFFFFF 0% 0% no-repeat padding-box;
+   }
+
+    .dynamic-form {
+        background: rgb(245, 246, 251);
+        flex-wrap: wrap;
+        display: flex;
+        padding: 1rem;
+        margin-right: 1rem;
+        box-shadow: none !important;
+    }
+
+    .form-header-pm {
+        background: rgb(245, 246, 251) !important;
+        padding-left: 1.6rem !important;
+    }
+
+    .file-lebel {
+        color: rgba(0, 0, 0, 0.4) !important;
+    }
+
+    .back-opacity{
+        opacity : 0.2;
+    }   
+
+   .file_label {
+        color: rgb(149, 149, 149) !important;
+    }
+    .file_label sup {
+        color: rgb(149, 149, 149) !important;
+    }
+    .mat-form-field-underline  {
+        background-color: rgba(0, 0, 0, 0.02) !important;
+    }
+    .mat-form-field-appearance-legacy .mat-form-field-infix {
+        border-bottom: 1px solid rgba(0, 0, 0, 0.15) !important;
+    }
+    // .mat-form-field-appearance-legacy .mat-form-field-infix {
+    //     padding: 0.4375em 0;
+    // }
+    .dynamic-form-box {
+        background: rgb(245, 246, 251);
+        flex-wrap: wrap;
+        display: flex;
+        padding-left: 1rem;
+        //margin-right: 1rem;
+        border-radius: 3px;
+        box-shadow: 0 1px 5px 0 rgb(238, 240, 242);
+    }
+    
+    *,::after, ::before {
+        box-sizing: border-box;
+    }
+
+    .download-icon {
+        top: 21px !important;
+    }
+    
+
+    /* Style only for Mozilla Firefox */
+    @-moz-document url-prefix() {
+    }
+
+    /* Style only for Internet Explorer */
+    @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+
+    }
+
+    @supports (-ms-ime-align: auto) {
+
+    @media only screen and (min-width: 700px) {
+            app-select {
+                width: 28% !important;
+            }
+            app-file {
+                width: 28% !important;
+            }
+            app-multiselect{
+                width: 28% !important;
+            }
+        }
+    }
+
+    .name-image {
+        width: 50px;
+        height: 30px;
+        border-radius: 5px;
+        color: white; 
+        font-weight: 600;
+    }
+
+    .partner-data-view-header-card {
+        box-shadow: none !important; 
+    }
+
+    .mat-card-header-text{
+        margin-left: 3rem !important;
+    }
+
+    .mat-card-title {
+        color: rgba(23, 71, 107, 1)!important;
+        font-size: 1.6rem !important; 
+        font-weight: bold !important;
+    }
+
+    .mat-card-subtitle {
+        margin-top: -5px !important;
+        color: rgba(0, 0, 0, 0.87);
+        font-weight: 500;
+        font-size: 1.3rem !important;
+    }
+
+    .partner-data-view-header-row1 {
+        display: flex;
+    }
+
+    .scoring-card-div {
+        background: rgba(0, 255, 255, 0.09019607843137255);
+        line-height: 6rem !important;
+        border-radius: 10px;
+    }
+
+    .status-card-div {
+        width: 170px;
+        line-height: 4rem !important;
+        background: rgba(238, 182, 125, 0.43) 0% 0% no-repeat padding-box;
+        border-radius: 21px;
+    }
+
+    .partner-data-view-primary-btn {
+        background: #17476B;
+        border: 2px solid #17476B;
+        border-radius: 10px;
+        color: #fff;
+        font-size: 1.2rem;
+        margin-right: 4rem;
+        line-height: 30px !important;
+        cursor: pointer !important;
+    }
+
+    .partner-data-view-primary-btn:disabled {
+        background: #17476B !important;
+        border: 2px solid #17476B !important;
+        border-radius: 10px !important;
+        color: #fff !important;
+        font-size: 1.2rem!important;
+        margin-right: 4rem !important;
+        line-height: 30px !important;
+        opacity: 0.3;
+        cursor: not-allowed !important;
+    }
+
+    .partner-data-view-secondary-btn {
+        border: 2px solid #17476B;
+        border-radius: 10px;
+        color: #17476B;
+        font-size: 1.2rem;
+        font-weight: bold;
+        line-height: 30px !important;
+        cursor: pointer !important;
+    }
+
+    .cancel-btn-ps {
+        color: rgb(97, 96, 96) !important;
+        font-size: 1.5rem;
+        line-height: 33px;
+    }
+
+    .partner-data-save-btn {
+        margin-right: 0px !important;
+    }
+
+    .partner-data-edit-btn {
+        padding: 0 20px 0px 8px;
+    }
+
+    .partner-data-edit-body {
+        box-shadow: 0 1px 5px 0 rgb(199, 206, 239);
+    }
+
+    .download-icon {
+       top: 12px !important;
+       z-index: 0 !important;
+       border: 1px solid rgba(95, 158, 160, 0.4);
+       border-radius: 3px;
+    }
+
+    .wf-checklist-wrapper {
+        border-width: 1px;
+        border-style: solid;
+        border-color: rgba(23, 71, 107, 1);
+        border-radius: 12px;
+        max-height:  300px;
+        overflow-y: auto;
+    }
+
+    .wf-header-check-list {
+        color: rgb(23, 71, 107);
+    }
+
+    .mat-checkbox-label {
+        width: 240px;
+        max-width: 240px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -ms-text-overflow: ellipsis;
+    }
+}
+

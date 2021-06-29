@@ -1,0 +1,3 @@
+include 'partnermanagement-service'
+
+rootProject.name = "partnermanagement-service"

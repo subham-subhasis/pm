@@ -1,0 +1,63 @@
+<section class="panel-data-view-conetent">
+    <div mat-dialog-content>
+        <div class="disp-flex jc-space-bw">
+            <div class="disp-flex flex-col ">
+                <div class="disp-flex md-flex-center">
+                    <div class="disp-flex md-flex-center">
+                        <mat-icon class="FS25 gloabl-pm-color pointer" (click)="onBackClick()">chevron_left</mat-icon>
+                        <span *ngIf="partnerSearchCount == 0" class="global-back-btn" (click)="onBackClick()">{{'PANELDATASELECTKPI.BACK' | translate}}</span>
+                    </div>
+                    <!-- <span (click)="onBackClick()"><mat-icon class="FS25 gloabl-pm-color pointer">chevron_left</mat-icon><span *ngIf="partnerSearchCount == 0">Back</span></span> -->
+                    <span *ngIf="partnerSearchCount != 0" class="S FS19 pointer color-17476b">{{partnerSearchCount}} {{'PANELDATASELECTKPI.RESULTSFOUNDFOR' | translate}}
+                        "{{selectedProfile.companyName}}"</span>
+                    
+                </div>
+                <div *ngIf="partnerSearchCount != 0" class="FS15 color-4D4F5C PT8  PL24 opacity-7"> {{'PANELDATASELECTKPI.CHOOSEONEORMANYPARTNERSFROMLIST' | translate}}</div>
+                <!-- <div *ngIf="errorMessage.allValSelect" class="FS15 red PT8  PL24 opacity-7"> {{'PANELDATASELECTKPI.SELECTONEOPTIONFROMEACHSOURCE' | translate}}</div> -->
+                
+            </div>
+            <div class="ML24">
+                <button class="global-opaque-btn pointer" (click)="onFetch()" [ngClass]="{'visibility-hidden': partnerSearchCount == 0}">
+                    <img class="MR5 va-middle" alt="Fetch" height="15" src="./assets/images/correct.svg" title="Fetch"
+                        width="15">
+                    Fetch</button>
+            </div>
+            
+        </div>
+        <div class="WD-PC100 MT50" *ngIf="partnerSearchCount == 0">
+            <mat-card class="empty-card-fixed">
+                <mat-card-content class="PT5 flex-center-align HT-P80 md-flex-center">
+                    <span class="FS15 ta-center">
+                        {{'PANELDATASELECTKPI.NODATAFOUND' | translate}}
+                    </span>
+                </mat-card-content>
+              </mat-card>
+        </div>
+        <section class="panel-data-view-conetent-body flex-row md-flex-wrap PL-REM1 PR-REM1 PT36">
+            <!--chetan-->
+            <div class="source-container WD-PC100" style="height:calc(100vh - 185px);overflow-y: auto;">
+                <div class="PL16 PB24" *ngFor="let key of sourceKeys">
+                    <div class="FS15 B gloabl-pm-color">
+                        {{kpiAliasmap && kpiAliasmap[key] ? kpiAliasmap[key] : key}}
+                    </div>
+                    <!-- [ngClass]="{'no-drop':item.isDisabled}"  -->
+                    <div class="PT24 disp-flex md-flex-center" *ngFor="let item of sourceData[key].profiles">
+                        <mat-checkbox [name]='key' class="disp-flex md-flex-center" (change)='onCheck(key,item)'
+                            [ngClass]="{'no-drop':item.isDisabled, 'pointer-events-none': item.isExactMatch}" [(ngModel)]="item.isSelected"
+                            [checked]="item.isSelected" [disabled]='item.isDisabled'>
+                        </mat-checkbox>
+                        <div class="HT-P70 ML24" style="width:70px" *ngIf="false">
+                            <img *ngIf="item.image.length > 0" alt="{{item.name}}" src="{{item.image}}" height='70' width='70'
+                                title="{{item.name}}" />
+                            <div  *ngIf="item.image.length == 0"class="ta-center flex-center-align md-flex-center no-image-found FS10 color-grey"> No image found.</div>
+                        </div>
+                        <div class="ML24 FS14 B color-4D4F5C">
+                            {{item.name}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </div>
+</section>

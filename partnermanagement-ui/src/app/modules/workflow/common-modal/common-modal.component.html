@@ -1,0 +1,17 @@
+<div id="confirmModal" class="modal">
+  <div class="modal-content">
+    <span class="close pointer" (click)="fireEventOnBack('close')">&times;</span>
+    <div class="FS14 PL20">
+      <div class="FS18 B common-modal-header">{{header}}</div>
+      <mat-form-field class="example-full-width">
+        <textarea matInput [(ngModel)]="moveBehindCommnet" required
+          (input)="moveBehindCommnet.length > 0 && errorMessageFlag = false"></textarea>
+      </mat-form-field>
+      <span class="red FS12" *ngIf="errorMessageFlag">Please enter a reason.</span>
+    </div>
+    <div class="disp-flex jc-flex-end MT20">
+      <button class="btn PL10 PR10 PT7 PB7 yes-btn  pointer" (click)="fireEventOnBack('move')">Move</button>
+      <button class="btn PL10 PR10 PT7 PB7 cancel-btn ML10 pointer" (click)="fireEventOnBack('close')">Cancel</button>
+    </div>
+  </div>
+</div>

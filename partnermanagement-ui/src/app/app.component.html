@@ -1,0 +1,15 @@
+<app-main-loader *ngIf="mainView"></app-main-loader>
+<div class="" *ngIf="!mainView">
+  <section class="section-header">
+    <app-header-panel></app-header-panel>
+  </section>
+  <section class="disp-flex mid-content">
+    <app-sidenav></app-sidenav>
+    <div class="router-content full-width">
+      <router-outlet></router-outlet>
+    </div>
+  </section>
+  <section class="disp-flex" *ngIf="false">
+    <app-footer-panel></app-footer-panel>
+  </section>
+</div>

@@ -1,0 +1,61 @@
+/* You can add global styles to this file, and also import other style files */
+@import "themes";
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.mat-menu-panel .matMenu {
+    min-width: 35px;
+    max-width: 280px;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    max-height: calc(100vh - 48px);
+    border-radius: 2px;
+    outline: 0;
+    background: transparent;
+    padding-left: 10px !important;
+}
+
+.deeppurple-amber .mat-accent .mat-slider-thumb {
+    background-color: rgb(32, 202, 189) !important; 
+}
+
+.deeppurple-amber .mat-accent .mat-slider-track-fill {
+    background-color: rgb(32, 202, 189) !important;
+}
+
+.deeppurple-amber .mat-checkbox-checked.mat-accent .mat-checkbox-background {
+    background-color: rgb(32, 202, 189) !important;
+}
+
+.deeppurple-amber .mat-checkbox-frame {
+    border-color: rgb(32, 202, 189) !important;
+}
+
+// .deeppurple-amber .mat-primary .mat-option.mat-selected:not(.mat-option-disabled) {
+//     color:  rgb(32, 202, 189);
+// }
+ 
+.deeppurple-amber .mat-progress-bar-fill::after {
+    background-color:  rgb(23, 71, 107);
+}  
+
+.deeppurple-amber .mat-input-element:disabled {
+    color: rgb(170, 170, 170) !important;
+    cursor: auto !important;
+}
+
+.deeppurple-amber .mat-menu-item .mat-icon-no-color {
+    color: rgb(23 71 107) !important;
+}
+
+.deeppurple-amber .mat-menu-item:hover:not([disabled]) {
+    background: #ffffff !important;
+}
+
+.deeppurple-amber .mat-dialog-container {
+    border-radius: 10px !important;
+}
+
+.deeppurple-amber .mat-checkbox-disabled .mat-checkbox-inner-container .mat-checkbox-background {
+    background-color:  rgb(170, 170, 170) !important;
+}

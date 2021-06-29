@@ -1,0 +1,3 @@
+include 'partnermanagement-angular-api', 'partnermanagement-ui', 'partnermanagement-service'
+
+rootProject.name = "Partnermanagement"

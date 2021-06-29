@@ -1,0 +1,94 @@
+<section class="blockchain-organisation-register-content">
+    <div class="disp-flex jc-center align-self-center md-flex-center" *ngIf="loader"> <div id="cover-spin"></div></div>
+    <div class="" *ngIf="!loader"> <!--<div mat-dialog-content>-->
+        <div class="disp-flex jc-space-bw">
+            <div class="FS15 B gloabl-pm-color"> {{'BLOCKCHAINREGISTER.ORGREGISTER' | translate}} </div>
+            <div class="disp-flex">
+                <mat-icon class="FS25 gloabl-pm-color pointer" (click)="onBackClick(false)">close</mat-icon>
+            </div>
+        </div>
+        <section class="blockchain-organisation-register-content-body flex-row md-flex-wrap MT20">
+            <div class="blockchain-organisation-register-content-body-form">
+                <form [formGroup]="formGroupBlockChain" autocomplete="off" autofocus="off" class="form">
+                    <div class="flex-row">
+                        <mat-form-field class="form-element PR-REM2" [ngClass]="{'global-form-control-disabled-manual': true }">
+                            <mat-label>{{'BLOCKCHAINREGISTER.PARTNERNAME' | translate}}</mat-label>
+                            <input tabindex="-1" matInput placeholder="Partner Name" formControlName="partnerName">
+                            <mat-error>{{'MANDATEMESSAGE' | translate}}</mat-error>
+                        </mat-form-field>
+
+                        <mat-form-field class="form-element PR-REM2" [ngClass]="{'global-form-control-disabled-manual': formData.enableEdit }"> 
+                        <mat-label>{{'BLOCKCHAINREGISTER.ORGNAME' | translate}}</mat-label>
+                        <input [tabindex]="formData.enableEdit ? -1 : 1" title="Organisation Name(without space)" matInput placeholder="Organisation Name" formControlName="orgName" autofocus>
+                        <mat-error>{{'MANDATEMESSAGE' | translate}}</mat-error>
+                        </mat-form-field>
+                    
+                        <mat-form-field class="form-element PR-REM2" [ngClass]="{'global-form-control-disabled-manual': formData.enableEdit }">
+                        <mat-label>{{'BLOCKCHAINREGISTER.DOMAIN' | translate}}</mat-label>
+                        <input [tabindex]="formData.enableEdit ? -1 : 1" matInput placeholder="Domain" formControlName="domain">
+                        <mat-error>{{'MANDATEMESSAGE' | translate}}</mat-error>
+                        </mat-form-field>
+                    
+                        <mat-form-field class="form-element PR-REM2" [ngClass]="{'global-form-control-disabled-manual': formData.enableEdit }">
+                        <mat-label>{{'BLOCKCHAINREGISTER.ORGPREFIX' | translate}}</mat-label>
+                        <input [tabindex]="formData.enableEdit ? -1 : 1" matInput placeholder="Organisation Prefix" formControlName="orgPrefix">
+                        <mat-error>{{'MANDATEMESSAGE' | translate}}</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="PB-REM2 PT-REM1">
+                        <mat-label class="PB20 bold-header-color S">{{'BLOCKCHAINREGISTER.TYPE' | translate}}</mat-label>
+                        <div class="form-element flex-row PT10">
+                        <mat-checkbox [disabled]="formData.enableEdit" class="flex-1 FS13" formControlName="reconciliation" value="Reconciliation" (change)="openReconSliders()">{{'BLOCKCHAINREGISTER.RECONCILIATION' | translate}}</mat-checkbox>
+                        <mat-checkbox [disabled]="formData.enableEdit" class="flex-1 FS13" formControlName="fas" value="FAS">{{'BLOCKCHAINREGISTER.FAS' | translate}}</mat-checkbox>
+                        <mat-checkbox [disabled]="formData.enableEdit" class="flex-1 FS13" formControlName="fraudposting" value="Fraudposting">{{'BLOCKCHAINREGISTER.FRAUDPOSTING' | translate}}</mat-checkbox>
+                        <div class="flex-2"></div>
+                        </div>
+                    </div>
+
+                    <div class="flex-row" *ngIf="formData.viewReconSliders">
+                        <div class="flex-col md-flex-wrap flex-1">
+                            <mat-label class="bold-header-color S">{{'BLOCKCHAINREGISTER.AMOUNTTHRESHOLD' | translate}}</mat-label>
+                            <div class="WD-PC100 align-self-center disp-flex md-flex-center">
+                                <mat-icon class="no-selection FS20 gloabl-pm-color pointer MR3" (click)="removeValue('amountThreshold')">remove_circle_outline</mat-icon>
+                                <mat-slider class="" [max]="formData.max" [min]="formData.min" [step]="formData.step"
+                                    formControlName="amountThreshold" #amountThreshold
+                                    (change)="changeAmountThreshhold(amountThreshold.value)">
+                                </mat-slider>
+                                <mat-icon class="no-selection FS20 gloabl-pm-color pointer ML3" (click)="addValue('amountThreshold')">add_circle_outline</mat-icon>
+                                <span class="global-dark-font-wrapped ML20 P2">{{formGroupBlockChain.value.amountThreshold}}</span>
+                            </div>
+                        </div>
+                        <div class="flex-col md-flex-wrap flex-1">
+                            <mat-label class="bold-header-color S">{{'BLOCKCHAINREGISTER.DURATIONTHRESHOLD' | translate}}</mat-label>
+                            <div class="WD-PC100 align-self-center disp-flex md-flex-center">
+                                <mat-icon class="no-selection FS20 gloabl-pm-color pointer MR3" (click)="removeValue('durationThreshold')">remove_circle_outline</mat-icon>
+                                <mat-slider class="" [max]="formData.max" [min]="formData.min" [step]="formData.step"
+                                    formControlName="durationThreshold" #durationThreshold
+                                    (change)="changeDurationThreshhold(durationThreshold.value)">
+                                </mat-slider>
+                                <mat-icon class="no-selection FS20 gloabl-pm-color pointer ML3" (click)="addValue('durationThreshold')">add_circle_outline</mat-icon>
+                                <span class="global-dark-font-wrapped ML20 P2">{{formGroupBlockChain.value.durationThreshold}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="formData.networkMountPoint && formData?.networkMountPoint.length > 0">
+                        <mat-label class="bold-header-color S MB10">{{'BLOCKCHAINREGISTER.PATHRECON' | translate}}</mat-label><br/>
+                        <div class="disp-flex jc-space-bw MB5 MT5">
+                            <div class="P-REM1 flex-1 conatiner-wrap-paths flex-row">
+                                <div class="FS13 M flex-6">{{formData.networkMountPoint}}</div>
+                                <div (click)="doCopy()" title="Copy content" class="pointer FS14 ML5 flex-1"><mat-icon>content_copy</mat-icon></div>
+                            </div>
+                            <div class="flex-2"></div>  
+                        </div>
+                    </div>
+
+                    <div class="form-element MT20 MB5">
+                        <button type="submit" class="global-opaque-btn pointer MR16" (click)="onConfirm()"
+                        [disabled]="formData.enableSubmit">
+                            {{'CONFIRM' | translate}}</button>
+                    </div>
+                  </form>
+            </div>
+        </section>
+    </div>
+</section>

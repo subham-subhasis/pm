@@ -1,0 +1,56 @@
+
+<section class="panel-data-view-conetent">
+    <div mat-dialog-content>
+        <div class="disp-flex jc-space-bw">
+            <div class="disp-flex md-flex-center">
+                <mat-icon class="FS25 gloabl-pm-color">chevron_left</mat-icon>
+                <span class="global-back-btn" (click)="onBackClick()">{{'PANELDATAVIEWKPI.BACK' | translate}}</span>
+            </div>
+            <div>
+                <button class="global-opaque-btn pointer" (click)="linkProfile()" *ngIf="showLinkButton">
+                    <img class="MR5 va-middle" alt="Apply" height="15" src="./assets/images/correct.svg" title="Apply" width="15">
+                    {{'PANELDATAVIEWKPI.LINK' | translate}}</button>
+            </div>
+        </div>
+        <section class="panel-data-view-conetent-body flex-row md-flex-wrap PL-REM1 PR-REM1">
+            <mat-progress-bar mode="indeterminate" class="green-progress" color="red" *ngIf="loader"></mat-progress-bar>
+            <div class="panel-data-view-conetent-header WD-PC100">
+                <div class="float-left" *ngIf="selectedProfile?.logo.length > 0">
+                    <img class="responsive" height="90" width="90" [src]="selectedProfile?.logo" alt="Logo"/>
+                </div>
+                <div class="float-left with-out-logo-image" *ngIf="selectedProfile?.logo.length == 0"
+                [ngClass]="{'status-orange': selectedProfile.status == 'preactive', 'status-red': selectedProfile.status == 'rejected', 'status-green': selectedProfile.status == 'active', 'status-grey': selectedProfile.status == 'underconsideration'  }">
+                <div class="disp-flex jc-center align-self-center md-flex-center FS20 with-out-logo-image">{{selectedProfile?.companyAbbr}}
+                    </div>
+                </div>
+                <div class="gloabl-pm-color FS18 MT8 B">
+                    {{selectedProfile?.companyName}}
+                </div>
+            </div>
+
+            <div class="disp-flex WD-PC100  panel-data-view-body">
+                <mat-tab-group class="disp-flex WD-PC100">
+                    <mat-tab label="Overview"> 
+                        <div class="MT16">
+                            <mat-grid-list cols="3" rowHeight="80px">
+                                <mat-grid-tile
+                                    *ngFor="let tile of panelDataContent | orderBy:{ property: 'order_number', descending: false }"
+                                    [colspan]="tile.cols"
+                                    [rowspan]="tile.rows">
+                                    <div class="flex-col MB16 MR8">
+                                        <div class="FS12 MB6 description-header-color description-header-text-epplisis" [title]="tile.label">
+                                            {{tile.label | titlecase}} :
+                                        </div>
+                                        <div  class="FS13 description-content-color" [title]="tile.value" style="border-right: 8px solid #fff; word-break: break-word; box-sizing: border-box;">
+                                            {{tile.value}}
+                                        </div>
+                                    </div>
+                                </mat-grid-tile>
+                              </mat-grid-list>
+                        </div>    
+                    </mat-tab>
+                  </mat-tab-group>
+            </div>
+        </section>
+    </div>
+</section>

@@ -1,0 +1,1549 @@
+{
+    "openapi": "3.0.2",
+    "info": {
+        "title": "PartnerManagement",
+        "version": "1.0.0",
+        "description": "API definition for a MicroService. The API is consumed by both\n    SpringBootWeb and Angular UI applications. This example provides a\n    definition maintenance service which is used for configuring KPI definitions and user defined field to be appeared on the self registration screen  . Using this API you can\n    add, delete, modify Definitions  and view list of definitions in the system.",
+        "contact": {
+            "name": "Subex Ltd.",
+            "url": "https://subex.com",
+            "email": "info@subex.com"
+        },
+        "license": {
+            "name": "Proprietary"
+        }
+    },
+    "servers": [
+        {
+            "url": "http://definition-service.subex.com/api",
+            "description": ""
+        }
+    ],
+    "paths": {
+        "/profileinfos": {
+            "summary": "Path used to manage the list of profileinfos.",
+            "description": "The REST endpoint/path used to list and create zero or more `ProfileInfo` entities.  This path contains a `GET` and `POST` operation to perform the list and create tasks, respectively.",
+            "get": {
+                "parameters": [
+                    {
+                        "name": "profileName",
+                        "description": "Extentions to filters",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/ProfileInfo"
+                                    }
+                                }
+                            }
+                        },
+                        "description": "Successful response - returns an array of `ProfileInfo` entities."
+                    }
+                },
+                "operationId": "getprofileinfos",
+                "summary": "List All profileinfos",
+                "description": "Gets a list of all `ProfileInfo` entities."
+            }
+        },
+        "/partnerinfos": {
+            "summary": "list all PartnerInfos",
+            "description": "The REST endpoint/path used to list and create zero or more `partnerInfoEntity` entities.  This path contains a  `POST` operation to perform the list and create tasks, respectively.",
+            "get": {
+                "parameters": [
+                    {
+                        "name": "requestNumber",
+                        "description": "",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "in": "query"
+                    },
+                    {
+                        "name": "isWorkflow",
+                        "description": "",
+                        "schema": {
+                            "type": "boolean"
+                        },
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/PartnerInfo"
+                                    }
+                                }
+                            }
+                        },
+                        "description": "Successful response - returns an array of `partnerInfoEntity` entities."
+                    }
+                },
+                "operationId": "getpartnerinfoentities",
+                "summary": "List All partnerinfoentities",
+                "description": "Gets a list of all `partnerInfoEntity` entities."
+            },
+            "put": {
+                "requestBody": {
+                    "description": "Workflow model ",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PartnerModel"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "parameters": [
+                    {
+                        "name": "partnerId",
+                        "description": "",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "in": "query",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Response"
+                                }
+                            }
+                        },
+                        "description": "return response"
+                    }
+                },
+                "operationId": "updatePartnerWorkflowStatus",
+                "summary": "updatepartnerInfoEntity",
+                "description": "updatepartnerInfoEntity"
+            }
+        },
+        "/profiles": {
+            "summary": "Path used t.o manage the list of profiles",
+            "description": "The REST endpoint/path used to list and create zero or more `Profile` entities.  This path contains a `GET` operation to perform the list and create tasks, respectively.",
+            "get": {
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Profile"
+                                    }
+                                }
+                            }
+                        },
+                        "description": "Successful response - returns an array of `Profile` entities."
+                    }
+                },
+                "operationId": "getprofiles",
+                "summary": "List All profiles",
+                "description": "Gets a list of all `Profile` entities."
+            }
+        },
+        "/partnerinfos/{partnerId}": {
+            "summary": "Path used to manage a single partnerInfoEntity.",
+            "description": "The REST endpoint/path used to get, update, and delete single instances of an `partnerInfoEntity`.  This path contains `GET`, `PUT`, and `DELETE` operations used to perform the get, update, and delete tasks, respectively.",
+            "get": {
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PartnerInfo"
+                                }
+                            }
+                        },
+                        "description": "Successful response - returns a single `partnerInfoEntity`."
+                    }
+                },
+                "operationId": "getpartnerInfoEntity",
+                "summary": "Get a partnerInfoEntity",
+                "description": "Gets the details of a single instance of a `partnerInfoEntity`."
+            },
+            "put": {
+                "requestBody": {
+                    "description": "Updated `partnerInfoEntity` information.",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PartnerInfo"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "parameters": [
+                    {
+                        "name": "actorId",
+                        "description": "",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "in": "query"
+                    },
+                    {
+                        "name": "partnerId",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Response"
+                                }
+                            }
+                        },
+                        "description": "Successful response."
+                    }
+                },
+                "operationId": "updatepartnerInfoEntity",
+                "summary": "updatepartnerInfoEntity",
+                "description": "Updates an existing `partnerInfoEntity`."
+            },
+            "parameters": [
+                {
+                    "name": "partnerId",
+                    "schema": {
+                        "type": "string"
+                    },
+                    "in": "path",
+                    "required": true
+                }
+            ]
+        },
+        "/partnerinfos/blockchain": {
+            "summary": "Registering to blockchain network",
+            "description": "Registering to blockchain network",
+            "get": {
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Response"
+                                }
+                            }
+                        },
+                        "description": "Block Chain Status Response"
+                    }
+                },
+                "operationId": "getBlockChainStatus",
+                "summary": "Get Block Chain Status",
+                "description": "Get Block Chain Status"
+            },
+            "post": {
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BlockChainModel"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Response"
+                                }
+                            }
+                        },
+                        "description": "Organisation Created"
+                    }
+                },
+                "operationId": "registerToBlockChain",
+                "summary": "Register to Block Chain Network",
+                "description": "Register to Block Chain Network"
+            }
+        },
+        "/partnerinfos/scorable": {
+            "summary": "Lists scorable Definitions",
+            "description": "Lists scorable Definitions",
+            "get": {
+                "parameters": [
+                    {
+                        "name": "profileName",
+                        "description": "",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Definition"
+                                    }
+                                }
+                            }
+                        },
+                        "description": "List of scorable Definitions"
+                    }
+                },
+                "operationId": "getScorableDefinitions",
+                "summary": "Lists scorable Definitions",
+                "description": "Lists scorable Definitions"
+            }
+        },
+        "/partnerinfos/updateScore": {
+            "summary": "This API is called from Analytics once score is been calculated.",
+            "description": "Update the Partner score",
+            "put": {
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PartnerInfo"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "parameters": [
+                    {
+                        "name": "scoreType",
+                        "description": "",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "202": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Response"
+                                }
+                            }
+                        },
+                        "description": "successful response"
+                    }
+                },
+                "operationId": "updatePartnerScore",
+                "summary": "Update the Partner score",
+                "description": "Update the Partner score"
+            },
+            "parameters": [
+                {
+                    "name": "scoreType",
+                    "description": "",
+                    "schema": {
+                        "type": "string"
+                    },
+                    "in": "query"
+                }
+            ]
+        },
+        "/partnerinfos/checklist": {
+            "description": "Uses POST and Upadte mathod to save the checklist data",
+            "get": {
+                "parameters": [
+                    {
+                        "name": "partnerId",
+                        "description": "",
+                        "schema": {
+                            "format": "int32",
+                            "type": "integer"
+                        },
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "name": "teamName",
+                        "description": "",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/CheckListModel"
+                                    }
+                                }
+                            }
+                        },
+                        "description": "response of CheckList"
+                    }
+                },
+                "operationId": "getCheckListData",
+                "summary": "getCheckListData",
+                "description": "getCheckListData"
+            },
+            "post": {
+                "requestBody": {
+                    "description": "Request Body",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CheckListModel"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Response"
+                                }
+                            }
+                        },
+                        "description": "successful resposnse"
+                    }
+                },
+                "operationId": "createCheckListData",
+                "summary": "createCheckListData",
+                "description": "createCheckListData"
+            }
+        },
+        "/partnerinfos/blockchain/{partnerId}": {
+            "summary": "path used to fetch the blockchain details for a single partner",
+            "description": "The REST endpoint/path used to get single instances of an `partnerBlockchainEntity`.  This path contains `GET` operations used to perform the get details.",
+            "get": {
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BlockChainModel"
+                                }
+                            }
+                        },
+                        "description": "Successful response - returns a single `partnerBlockchainEntity`."
+                    }
+                },
+                "operationId": "getBlockchainDetailsByPartnerId",
+                "summary": "Get a partnerBlockchainEntity",
+                "description": "Gets the details of a single instance of a `partnerBlockchainEntity`."
+            },
+            "parameters": [
+                {
+                    "name": "partnerId",
+                    "schema": {
+                        "type": "string"
+                    },
+                    "in": "path",
+                    "required": true
+                }
+            ]
+        },
+        "/partnerinfos/{firstIndex}/{lastIndex}": {
+            "summary": "The REST endpoint/path used to list and create zero or more `partnerInfoEntity` entities.  This path contains a  `POST` operation to perform the list and create tasks, respectively.",
+            "description": "The REST endpoint/path used to list and create zero or more `partnerInfoEntity` entities.  This path contains a  `POST` operation to perform the list and create tasks, respectively. Pagination",
+            "post": {
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "array",
+                                "items": {
+                                    "$ref": "#/components/schemas/FilterMap"
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "firstIndex",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "name": "lastIndex",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/PagedPartnerInfoEntities"
+                                }
+                            }
+                        },
+                        "description": "PartnerInfo Data"
+                    }
+                },
+                "operationId": "getPartnersInfoPaginatedPost",
+                "summary": "Get partner Info details paginated",
+                "description": "Get partner Info details paginated"
+            },
+            "parameters": [
+                {
+                    "name": "firstIndex",
+                    "in": "path",
+                    "required": true
+                },
+                {
+                    "name": "lastIndex",
+                    "in": "path",
+                    "required": true
+                },
+                {
+                    "name": "filterProfile",
+                    "description": "",
+                    "schema": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "in": "query",
+                    "required": false
+                },
+                {
+                    "name": "filterStatus",
+                    "description": "",
+                    "schema": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "in": "query"
+                },
+                {
+                    "name": "filterCreatedFromDate",
+                    "description": "",
+                    "schema": {
+                        "type": "string"
+                    },
+                    "in": "query"
+                },
+                {
+                    "name": "filterCreatedToDate",
+                    "description": "",
+                    "schema": {
+                        "type": "string"
+                    },
+                    "in": "query"
+                }
+            ]
+        }
+    },
+    "components": {
+        "schemas": {
+            "Definition": {
+                "description": "New Defintion Model.",
+                "required": [
+                    "dfnName"
+                ],
+                "type": "object",
+                "properties": {
+                    "dfnName": {
+                        "description": "Name of the definition.",
+                        "type": "string"
+                    },
+                    "dfnId": {
+                        "format": "int32",
+                        "description": "Id of the definition",
+                        "type": "integer"
+                    },
+                    "dfnCategory": {
+                        "description": "Category which the definition belong to. Predefined or User defined.",
+                        "type": "string"
+                    },
+                    "fieldGrpId": {
+                        "format": "int32",
+                        "description": "Group of the form field.",
+                        "type": "integer"
+                    },
+                    "isMandatory": {
+                        "description": "Boolean which tells if the field on registration form is mandatory to be filled by partner or not.",
+                        "type": "boolean"
+                    },
+                    "mandatoryMsg": {
+                        "description": "Error message if the value is not selected for the definition on registration",
+                        "type": "string"
+                    },
+                    "action": {
+                        "description": "Publish - P ( only appears in the registration form)\nScore - S ( only used for scoring purpose)\nPublish/Score - PS( appears in the registration form also to be used for scoring)",
+                        "type": "string"
+                    },
+                    "maxWeightage": {
+                        "format": "int32",
+                        "description": "Max scale for the KPI",
+                        "type": "integer"
+                    },
+                    "dfnOrder": {
+                        "format": "int32",
+                        "description": "Order in which fields should be appeared on the screen within the group",
+                        "type": "integer"
+                    },
+                    "fieldType": {
+                        "description": "Type of the user deifnined field appeared in the registration form like Select box,Input field,Date field/File upload field etc. In case of scoreable field there would be weightage field as well.",
+                        "type": "string"
+                    },
+                    "fieldOptions": {
+                        "description": "Options for select box",
+                        "type": "string"
+                    },
+                    "isWebScrap": {
+                        "description": "Should this definition value to be retrived from the social websites by AI",
+                        "type": "boolean"
+                    },
+                    "weightages": {
+                        "description": "Array of Weightage object",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Weightage"
+                        }
+                    },
+                    "profileName": {
+                        "description": "Type of business",
+                        "type": "string"
+                    },
+                    "validations": {
+                        "description": "array of validation objects",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Validation"
+                        }
+                    },
+                    "panelOpenState": {
+                        "description": "always false in resposne",
+                        "type": "boolean"
+                    }
+                }
+            },
+            "FieldGroupModel": {
+                "description": "This is to create/list new group. This Group will be used in configuration screen of form fields to group in such that it will appear in different field set of registration screen.\nEg: Address Details group will have Address1,Address2,Street,City etc fields/definitions.",
+                "required": [
+                    "fieldGrpId",
+                    "fieldGrpName"
+                ],
+                "type": "object",
+                "properties": {
+                    "fieldGrpId": {
+                        "format": "int32",
+                        "description": "Primary key of the field group table",
+                        "type": "integer"
+                    },
+                    "fieldGrpName": {
+                        "description": "Name of field group",
+                        "type": "string"
+                    }
+                }
+            },
+            "FieldGroupEntry": {
+                "description": "This is being for create api of field group",
+                "required": [
+                    "fieldGrpName"
+                ],
+                "type": "object",
+                "properties": {
+                    "fieldGrpName": {
+                        "description": "Name of field Group",
+                        "type": "string"
+                    }
+                }
+            },
+            "Weightage": {
+                "description": "Weightage for KPI definitions",
+                "required": [
+                    "type"
+                ],
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "description": "different value of the KPI deinition.\nEg: if Geography is the KPI, then type will be diffrent countries.",
+                        "type": "string"
+                    },
+                    "weightageVal": {
+                        "format": "double",
+                        "description": "Value or weightage for the  type.",
+                        "type": "number"
+                    },
+                    "id": {
+                        "format": "int32",
+                        "description": "Primary key of Weightage Table",
+                        "type": "integer"
+                    }
+                }
+            },
+            "FormFieldGroup": {
+                "description": "It is the Group of the deinfitions",
+                "type": "object",
+                "properties": {
+                    "fieldGroup": {
+                        "$ref": "#/components/schemas/FieldGroupModel",
+                        "description": "Field Group"
+                    },
+                    "groupOrder": {
+                        "format": "int32",
+                        "description": "Order in which the Form Field set to be appeared in the Registartion form.",
+                        "type": "integer"
+                    },
+                    "definitions": {
+                        "description": "List of the Definition object",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Definition"
+                        }
+                    },
+                    "collapse": {
+                        "description": "always false in respoonse",
+                        "type": "boolean"
+                    }
+                }
+            },
+            "ProfileInfo": {
+                "description": "Contains the all the form fields for specific type of business or profile",
+                "type": "object",
+                "properties": {
+                    "profileName": {
+                        "description": "Name of profile or type of Business",
+                        "type": "string"
+                    },
+                    "profileData": {
+                        "description": "It has the list  Definitons in groups",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/FormFieldGroup"
+                        }
+                    },
+                    "isStub": {
+                        "description": "getting booealn value in response",
+                        "type": "boolean"
+                    }
+                }
+            },
+            "Response": {
+                "description": "Response Packet",
+                "type": "object",
+                "properties": {
+                    "Status": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "StatusCode": {
+                        "description": "",
+                        "type": "string"
+                    }
+                }
+            },
+            "Profile": {
+                "description": "Type Of business model. ",
+                "type": "object",
+                "properties": {
+                    "profileName": {
+                        "description": "",
+                        "type": "string"
+                    }
+                }
+            },
+            "Validation": {
+                "description": "Definitions validations",
+                "required": [],
+                "type": "object",
+                "properties": {
+                    "validationName": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "valId": {
+                        "format": "int32",
+                        "description": "",
+                        "type": "integer"
+                    },
+                    "validationMsg": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "value": {
+                        "description": "",
+                        "type": "string"
+                    }
+                }
+            },
+            "PartnerInfo": {
+                "description": "Store Partner Detials",
+                "type": "object",
+                "properties": {
+                    "createdDate": {
+                        "description": "Date when partner registered",
+                        "type": "string"
+                    },
+                    "infoData": {
+                        "description": "",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/InfoData"
+                        }
+                    },
+                    "partnerId": {
+                        "format": "int32",
+                        "description": "",
+                        "type": "integer"
+                    },
+                    "profileName": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "status": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "blockChainStatus": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "originalCmpName": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "postOnBoardScore": {
+                        "format": "double",
+                        "description": "",
+                        "type": "number"
+                    },
+                    "preOnBoardScore": {
+                        "format": "double",
+                        "description": "",
+                        "type": "number"
+                    },
+                    "workStepTeam": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "statusInWorkStepTeam": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "wfProcessInstanceId": {
+                        "format": "int32",
+                        "description": "",
+                        "type": "integer"
+                    }
+                }
+            },
+            "InfoData": {
+                "description": "",
+                "type": "object",
+                "properties": {
+                    "dfnId": {
+                        "format": "int32",
+                        "description": "",
+                        "type": "integer"
+                    },
+                    "dfnName": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "dfnVal": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "webScrap": {
+                        "description": "",
+                        "type": "boolean"
+                    },
+                    "score": {
+                        "format": "double",
+                        "description": "",
+                        "type": "number"
+                    },
+                    "type": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "groupName": {
+                        "description": "",
+                        "type": "string"
+                    }
+                }
+            },
+            "EmailData": {
+                "description": "set the email propertes",
+                "type": "object",
+                "properties": {
+                    "from": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "tolist": {
+                        "description": "",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "bcclist": {
+                        "description": "",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "cclist": {
+                        "description": "",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "subject": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "emailBase64Text": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "emailText": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "attachments": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "id": {
+                        "format": "int32",
+                        "description": "",
+                        "type": "integer"
+                    }
+                }
+            },
+            "PartnerModel": {
+                "description": "Object for invoke workflow model",
+                "type": "object",
+                "properties": {
+                    "partnerId": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "teamName": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "actorId": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "processInstanceId": {
+                        "format": "int32",
+                        "description": "",
+                        "type": "integer"
+                    },
+                    "statusInWorkstep": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "emailBodyContent": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "action": {
+                        "description": "",
+                        "type": "string"
+                    }
+                }
+            },
+            "CheckListModel": {
+                "description": "",
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "format": "int32",
+                        "description": "",
+                        "type": "integer"
+                    },
+                    "teamName": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "toDos": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "partnerId": {
+                        "format": "int32",
+                        "description": "",
+                        "type": "integer"
+                    },
+                    "checkFlag": {
+                        "description": "",
+                        "type": "boolean"
+                    }
+                }
+            },
+            "BlockChainModel": {
+                "description": "Block Chain Request Model",
+                "type": "object",
+                "properties": {
+                    "domain": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "networkMountPoint": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "organisationName": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "organisationPrefix": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "partnerName": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "partnerId": {
+                        "description": "",
+                        "type": "integer"
+                    },
+                    "partnerBlockchainId": {
+                        "description": "",
+                        "type": "integer"
+                    },
+                    "types": {
+                        "description": "",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "amountThreshold": {
+                        "format": "double",
+                        "description": "",
+                        "type": "number"
+                    },
+                    "durationThreshold": {
+                        "format": "double",
+                        "description": "",
+                        "type": "number"
+                    }
+                }
+            },
+            "PartnerBlockchainModel": {
+                "description": "This will be sent to  Blockchain ",
+                "type": "object",
+                "properties": {
+                    "organisationName": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "organisationPrefix": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "domain": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "partnerName": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "amountThreshold": {
+                        "format": "double",
+                        "description": "",
+                        "type": "number"
+                    },
+                    "durationThreshold": {
+                        "format": "double",
+                        "description": "",
+                        "type": "number"
+                    },
+                    "smartContracts": {
+                        "description": "",
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "PagedPartnerInfoEntities": {
+                "description": "Paged Partner Infos",
+                "type": "object",
+                "properties": {
+                    "perPageRecords": {
+                        "description": "",
+                        "type": "integer"
+                    },
+                    "totalPartners": {
+                        "description": "",
+                        "type": "integer"
+                    },
+                    "totalPages": {
+                        "description": "",
+                        "type": "integer"
+                    },
+                    "partnerInfos": {
+                        "description": "",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/PartnerInfo"
+                        }
+                    }
+                }
+            },
+            "EntityStatusApiModelPost": {
+                "description": "",
+                "type": "object",
+                "properties": {
+                    "entityStatusCode": {
+                        "description": "",
+                        "type": "string"
+                    }
+                }
+            },
+            "AgentApiModelPost": {
+                "description": "",
+                "type": "object",
+                "properties": {
+                    "agentDisplay": {
+                        "description": "",
+                        "type": "string"
+                    }
+                }
+            },
+            "CustomerClassificationApiModelPost": {
+                "description": "",
+                "required": [
+                    "pcctName"
+                ],
+                "type": "object",
+                "properties": {
+                    "pcctName": {
+                        "description": "",
+                        "type": "string"
+                    }
+                }
+            },
+            "CustomerPriceApiModelPost": {
+                "description": "",
+                "type": "object",
+                "properties": {
+                    "customerPriceCode": {
+                        "description": "",
+                        "type": "string"
+                    }
+                }
+            },
+            "SalesRegionApiModelPost": {
+                "description": "",
+                "type": "object",
+                "properties": {
+                    "salesRegionCode": {
+                        "description": "",
+                        "type": "string"
+                    }
+                }
+            },
+            "FranchiseApiModelPost": {
+                "description": "",
+                "type": "object",
+                "properties": {
+                    "franchiseCode": {
+                        "description": "",
+                        "type": "string"
+                    }
+                }
+            },
+            "RocPsAccountAddressApiModelPost": {
+                "description": "",
+                "required": [
+                    "accountAddressType"
+                ],
+                "type": "object",
+                "properties": {
+                    "accountAddressType": {
+                        "$ref": "#/components/schemas/AccountAddressTypeApiModelPost",
+                        "description": ""
+                    },
+                    "address": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "addresseeEnvelope": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "pacdBuilding": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "companyRegistrationNumber": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "pacdCompanyRegCity": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "companyRegistrationType": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "companyTradeYears": {
+                        "format": "int64",
+                        "description": "",
+                        "type": "integer"
+                    },
+                    "pacdPostcode": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "salutation": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "pacdStreet": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "town": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "country": {
+                        "$ref": "#/components/schemas/CountryApiModelPost",
+                        "description": ""
+                    },
+                    "companyName": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "defaultAddress": {
+                        "description": "",
+                        "type": "boolean"
+                    }
+                }
+            },
+            "RocPsBankAccountApiModelPost": {
+                "description": "",
+                "type": "object",
+                "properties": {
+                    "pbacExtra1": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "bank": {
+                        "$ref": "#/components/schemas/BankApiModelPost",
+                        "description": ""
+                    },
+                    "bankAccountExtra2": {
+                        "description": "",
+                        "type": "string"
+                    }
+                }
+            },
+            "RocPsAccountContactInfoApiModelPost": {
+                "description": "",
+                "required": [
+                    "account"
+                ],
+                "type": "object",
+                "properties": {
+                    "paciName": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "paciEmail": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "paciOfficeNo": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "accountContactInfoHomeNumber": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "accountContactInfoFax": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "paciMobileNo": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "account": {
+                        "$ref": "#/components/schemas/RocPsAccountApiModelPost",
+                        "description": ""
+                    },
+                    "isDefaultContact": {
+                        "description": "",
+                        "type": "boolean"
+                    }
+                }
+            },
+            "UserTblApiModelPost": {
+                "description": "",
+                "type": "object",
+                "properties": {
+                    "userName": {
+                        "description": "",
+                        "type": "string"
+                    }
+                }
+            },
+            "MessageContext": {
+                "description": "",
+                "type": "object"
+            },
+            "RocPsAccountApiModelPost": {
+                "description": "",
+                "type": "object",
+                "properties": {
+                    "paccId": {
+                        "format": "int64",
+                        "description": "",
+                        "type": "integer"
+                    },
+                    "paccName": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "accountType": {
+                        "$ref": "#/components/schemas/RocPsAccountTypeApiModelPost",
+                        "description": ""
+                    },
+                    "accountNumber": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "customerType": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "usrId": {
+                        "format": "int64",
+                        "description": "",
+                        "type": "integer"
+                    },
+                    "partnerSegmentClass": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "entityStatus": {
+                        "$ref": "#/components/schemas/EntityStatusApiModelPost",
+                        "description": ""
+                    },
+                    "agent": {
+                        "$ref": "#/components/schemas/AgentApiModelPost",
+                        "description": ""
+                    },
+                    "accountCreditScore": {
+                        "format": "int64",
+                        "description": "",
+                        "type": "integer"
+                    },
+                    "parentAccount": {
+                        "$ref": "#/components/schemas/RocPsAccountApiModelPost",
+                        "description": ""
+                    },
+                    "parentPaccId": {
+                        "format": "int64",
+                        "description": "",
+                        "type": "integer"
+                    },
+                    "customerClassification": {
+                        "$ref": "#/components/schemas/CustomerClassificationApiModelPost",
+                        "description": ""
+                    },
+                    "customerPrice": {
+                        "$ref": "#/components/schemas/CustomerPriceApiModelPost",
+                        "description": ""
+                    },
+                    "salesRegion": {
+                        "$ref": "#/components/schemas/SalesRegionApiModelPost",
+                        "description": ""
+                    },
+                    "franchise": {
+                        "$ref": "#/components/schemas/FranchiseApiModelPost",
+                        "description": ""
+                    },
+                    "paccAcctRefNo": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "accountAddresses": {
+                        "description": "",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/RocPsAccountAddressApiModelPost"
+                        }
+                    },
+                    "bankAccounts": {
+                        "description": "",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/RocPsBankAccountApiModelPost"
+                        }
+                    },
+                    "accountContactInfos": {
+                        "description": "",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/RocPsAccountContactInfoApiModelPost"
+                        }
+                    },
+                    "lob": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "userTbl": {
+                        "$ref": "#/components/schemas/UserTblApiModelPost",
+                        "description": ""
+                    },
+                    "accountExtraInfos": {
+                        "description": "",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/accountExtraInfo"
+                        }
+                    }
+                }
+            },
+            "RocPsAccountTypeApiModelPost": {
+                "description": "",
+                "required": [
+                    "patpName"
+                ],
+                "type": "object",
+                "properties": {
+                    "patpName": {
+                        "description": "",
+                        "type": "string"
+                    }
+                }
+            },
+            "AccountAddressTypeApiModelPost": {
+                "description": "",
+                "type": "object",
+                "properties": {
+                    "accountAddressTypeName": {
+                        "description": "",
+                        "type": "string"
+                    }
+                }
+            },
+            "BankApiModelPost": {
+                "description": "",
+                "type": "object",
+                "properties": {
+                    "pbnkName": {
+                        "description": "",
+                        "type": "string"
+                    }
+                }
+            },
+            "CountryApiModelPost": {
+                "description": "",
+                "type": "object",
+                "properties": {
+                    "ctrName": {
+                        "description": "",
+                        "type": "string"
+                    }
+                }
+            },
+            "FilterMap": {
+                "description": "Filter Map Key Value pair",
+                "type": "object",
+                "properties": {
+                    "filterKey": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "filterValue": {
+                        "description": "",
+                        "type": "string"
+                    }
+                }
+            },
+            "accountExtraInfo": {
+                "description": "",
+                "type": "object",
+                "properties": {
+                    "eadName": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "eadVal": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "eadType": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "entityName": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "entityNameField": {
+                        "description": "",
+                        "type": "string"
+                    },
+                    "entityPrimaryKeyColumn": {
+                        "description": "",
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}
